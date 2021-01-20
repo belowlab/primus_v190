@@ -1,0 +1,32 @@
+out_dir: /data100t1/home/grahame/projects/compadre/primus/primus_1.9.0/example_output/newtest
+
+FILES AND COLUMNS
+LOG FILE: /data100t1/home/grahame/projects/compadre/primus/primus_1.9.0/example_output/newtest/PRIMUS_output.log
+Data stem: /data100t1/home/grahame/projects/compadre/genesis-rpy/test_data/nonFID550_stuff/nonFID550
+Dataset results dir: /data100t1/home/grahame/projects/compadre/primus/primus_1.9.0/example_output/newtest
+Age file: none
+Sex file: none
+Affection file: none
+Trait weighting:
+	size (size)
+
+SETTINGS
+Get PLINK IBD ESTIMATES with prePRIMUS: 1
+Automatic reference population selection: 1
+Verbose: 1
+Relatedness threshold: 0.09375
+Initial likelihood cutoff: 0.3
+Max generations: none
+Max generational mating gap: 0
+Get max unrelated set: 1
+Reconstruct pedigrees: 0
+Generating likelihood vector file...
+0.3/data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/data100t1/home/grahame/projects/compadre/primus/primus_1.9.0/example_output/newtestNEW OUTFILE:
+_KDE_likelihood_vectors
+NEW IBDFILE:
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/2nd_KDE_bw6_noisy
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/PO_KDE_bw17_noisy
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/FS_KDE_bw2_noisy
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/3rd_KDE_bw4_noisy
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/UN_KDE_bw6_noisy
+Loading KDE look-up-file = /data100t1/home/grahame/projects/compadre/primus/PRIMUS_v1.9.0_noMinCutoff/lib/KDE_data/UN_KDE_bw1_noisy
