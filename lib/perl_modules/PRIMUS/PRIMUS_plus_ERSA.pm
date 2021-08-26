@@ -1104,8 +1104,9 @@ sub is_leaf
 	else{return 1}
 }
 
-sub load_ersa_likelihoods
-{
+#########################################################################
+sub load_ersa_likelihoods {
+	
 	print "Loading ERSA likelihoods\n";
 	
 	my $lnl_file = shift;
@@ -1231,7 +1232,7 @@ sub load_ersa_likelihoods
 	print "done\n";
 	return \%likelihoods;
 }
-
+#########################################################################
 
 sub build_network_from_ped_file
 {

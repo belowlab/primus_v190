@@ -4,6 +4,8 @@ use strict;
 
 use Cwd 'abs_path';
 
+require './customlogger.pl';
+
 #print "run_PRIMUS.pl\n";
 
 my $lib_dir;
@@ -32,6 +34,10 @@ $ENV{'PERL5LIB'} =~ s/5\.14\.2/5\.10\.1/g;
 
 ## RUN PRIMUS SCRIPT
 #print "$bin_dir/primus_kickoff7.pl @ARGV --bin $bin_dir --lib $lib_dir\n";
+
+print "\n";
+print custom_log("Launching PRIMUS ...\n", 'info');
+
 system("$bin_dir/primus_kickoff7.pl @ARGV --bin $bin_dir --lib $lib_dir");
 
 

@@ -12,6 +12,8 @@
 ################ Common stuff ################
 use strict;
 
+require './customlogger.pl';
+
 my @commandline_options = @ARGV;
 
 #use lib '../lib/perl_modules';
@@ -58,15 +60,22 @@ my %affections = ("FID",1,"IID",2,"AFFECTION",3,"AFFECTION_VALUE",2);
 my %ages = ("FID",1,"IID",2,"AGE",3);
 my %traits;
 my @trait_order;
+
+#########################################
 my $relatedness_threshold = .09375; ## Values is halfway between the expected mean pi_hat for 3rd degree and 4th degree
 my $degree_rel_cutoff = 3;
+#########################################
+
 my $initial_likelihood_cutoff = .3; ## Arbitrary cutoff for the relationship likelihood vectors
 my $max_generations = "none"; ## The maximum number of generations in a pedigree allowed during reconstruction
 my $max_generation_gap = 0; ## What is maximum different in generations that 2 people can mate
 my $missing_data_value = 0;
+
 my $get_max_unrelated_set = 1; ## Defaults to determining the maximum unrelated set
 my $reconstruct_pedigrees = 1; ## Defaults to reconstructing pedigrees
-my $generate_likelihood_vectors_only = 1; ## Defaults to reconstructing pedigrees
+######################################
+my $generate_likelihood_vectors_only = 0; ## 0 defaults to reconstructing pedigrees
+######################################
 
 ## prePRIMUS variable
 my $run_prePRIMUS = 0;
@@ -110,6 +119,7 @@ print $LOG "Commandline options used: @commandline_options\n";
 
 ################ Print all files and settings ################
 
+
 print_files_and_settings() if $verbose > 0;
 
 if($max_generations eq 'none'){$max_generations = 1000}
@@ -120,39 +130,59 @@ if(-d $output_dir)
 
 
 #################### RUN PROGRAMS ###########################
-if($generate_likelihood_vectors_only)
-{
-  generate_likelihood_vectors_only();
-  print "done.\n";
-  exit;
-}
 
-if($run_prePRIMUS){
-	run_prePRIMUS();
+
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+if($generate_likelihood_vectors_only) {
+
+	print custom_log("Launching likelihood estimation ...\n", 'info');
+	generate_likelihood_vectors_only();
+	print "done.\n";
+	print custom_log("Likelihood estimation complete!\n", 'success');
+	exit;
 }
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
+
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+if($run_prePRIMUS) {
+	print custom_log("Launching prePRIMUS ...\n", 'info');
+	run_prePRIMUS();
+	print custom_log("prePRIMUS complete!\n", 'success');
+}
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 
 ## Run IMUS to get family networks and maximum unrelated set (unless turned off)
-if($reconstruct_pedigrees || $get_max_unrelated_set)
-{
+if($reconstruct_pedigrees || $get_max_unrelated_set) {
+	print custom_log("Launching IMUS ...\n", 'info');
 	my @IMUS_commands = ("--do_IMUS",$get_max_unrelated_set,"--do_PR",$reconstruct_pedigrees,"--ibd_estimates",\%ibd_estimates,"--verbose",$verbose,"--trait_order",\@trait_order,"--traits",\%traits,"--output_dir",$output_dir,"--rel_threshold",$relatedness_threshold,"--lib",$lib_dir,"--int_likelihood_cutoff",$initial_likelihood_cutoff,"--log_file_handle",$LOG);
 	print "IMUS_commands: @IMUS_commands\n" if $verbose > 1;
 	print $LOG "IMUS_commands: @IMUS_commands\n" if $verbose > 1;
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	if(!PRIMUS::IMUS::run_IMUS(@IMUS_commands)){die "IMUS FAILED TO COMPLETE\n"}
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 }
 
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 ## Run pedigree reconstruction
 if($reconstruct_pedigrees){
-
+	print custom_log("Launching pedigree reconstruction ...\n", 'info');
 	check_names();
 	run_PR();
+	print custom_log("PR complete!\n", 'success');
+	print custom_log("PRIMUS complete!\n", 'success');
 }
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 ## Run PRIMUS+ERSA
-if($run_PRIMUS_plus_ERSA)
-{
+if($run_PRIMUS_plus_ERSA) {
 	my $results = PRIMUS::PRIMUS_plus_ERSA::run_PRIMUS_plus_ERSA_project_summary($project_summary_file,$ersa_model_output,$ersa_results,$degree_rel_cutoff,$output_dir,$PADRE_multiple_test_correct);
 	print "PADRE results: $results\n";
 }
+#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 
 
 exit 0;
@@ -170,19 +200,27 @@ sub generate_likelihood_vectors_only
   print $initial_likelihood_cutoff;
   print $lib_dir;
   print $output_dir;
+  #QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
   PRIMUS::predict_relationships_2D::get_relationship_likelihood_vectors(\%ibd_estimates,$initial_likelihood_cutoff ,$verbose,$lib_dir,$output_dir);
+  #QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 }
 
 sub run_prePRIMUS
 {
 	## Test that all these paths exists
 	my %paths = ("LIB",$lib_dir,"PLINK",$plink_path);
+
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	PRIMUS::prePRIMUS_pipeline_v7::set_paths(\%paths);
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	
 	my @IBD_commands = ("--verbose",$verbose,"--study_name",$study_name,"--output_dir","$output_dir/$study_name\_prePRIMUS","--lib",$lib_dir,"--file",$data_stem,"--rerun",$rerun,"--ref_pops_ref",\@ref_pops,"--remove_AIMs",$remove_AIMs,"--keep_AIMs",$keep_AIMs,"--internal_ref",$internal_ref,"--alt_ref",$alt_ref_stem,"--no_PCA_plot",$no_PCA_plot,"--keep_intermediate_files",$keep_prePRIMUS_intermediate_files,"--no_automatic_IBD",$no_automatic_IBD,"--rel_threshold",$relatedness_threshold,"--log_file_handle",$LOG,"--MT_error_rate",$MT_MAX_PERCENT_DIFFERENCE_FOR_MATCH,"--Y_error_rate",$Y_MAX_PERCENT_DIFFERENCE_FOR_MATCH,"--no_mito",$no_mito,"--no_y",$no_y);
 
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	## Run the PLINK IBD pipeline
 	my ($temp_genome_file,$temp_sex_file,$temp_mt_match_file,$temp_y_match_file) = PRIMUS::prePRIMUS_pipeline_v7::run_prePRIMUS_main(@IBD_commands);
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+	
 	$ibd_estimates{'FILE'} = $temp_genome_file;
 	if(!exists $sexes{'FILE'} && -e $temp_sex_file)
 	{
@@ -197,7 +235,10 @@ sub run_prePRIMUS
 	{
 		$y_matches{'FILE'}=$temp_y_match_file;
 	}
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	$dataset_name = PRIMUS::prePRIMUS_pipeline_v7::get_file_name_from_stem($temp_genome_file);
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 	print "Dataset name: $dataset_name\n" if $verbose > 0;
 	print $LOG "Dataset name: $dataset_name\n" if $verbose > 0;
 	print "PrePRIMUS done.\n" if $verbose > 0;
@@ -228,9 +269,11 @@ sub run_PR
 			warn "$sexes{'FILE'} does not exists; continuing without sex info.\n";
 			delete $sexes{'FILE'};
 		}
-		else
-		{
+		else{
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			$sexes_ref = get_sample_info($sexes{'FILE'},$sexes{'FID'},$sexes{'IID'},$sexes{'SEX'});
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 			foreach my $id (keys %$sexes_ref)
 			{
 				if($$sexes_ref{$id} eq $sexes{'MALE'}){$$sexes_ref{$id} = 1}
@@ -244,9 +287,11 @@ sub run_PR
 			}
 		}
 	}
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	if(exists $affections{'FILE'}){$affections_ref = get_sample_info($affections{'FILE'},$affections{'FID'},$affections{'IID'},$affections{'AFFECTION'})}
 	if(exists $ages{'FILE'}){$ages_ref = get_sample_info($ages{'FILE'},$ages{'FID'},$ages{'IID'},$ages{'AGE'})}
-	
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 	## Set the project summary file in case PRIMUS+ERSA is also called
 	$project_summary_file = "$output_dir/Summary_$dataset_name.txt";
 
@@ -301,6 +346,9 @@ sub run_PR
 			open(AFFECTION,">$network_dir/affection.temp");
 			foreach my $key (keys %$affections_ref){print AFFECTION "$key\t$$affections_ref{$key}\n";}
 			close(AFFECTION);
+
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 			#print "pr: @PR_commands\n";
 			my $file = "$network_dir/run_dataset_cluster_$network_name.sh";
 			print "writing $file\n" if $verbose > 0;
@@ -332,13 +380,16 @@ sub run_PR
 			print OUT "./make_dataset_pairwise_summary.pl $output_dir $dataset_name";
 			close(OUT);
 			system("qsub -js 12 $file");
+
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 		}
 		else
 		{
 			my @PR_commands = ("--network",$network_name,"--ibd_estimates",\%network_ibd_estimates,"--y_hash",\%y_matches,"--mito_hash",\%mito_matches,"--verbose",$verbose,"--output_dir",$network_dir,"--int_likelihood_cutoff",$initial_likelihood_cutoff,"--max_gen",$max_generations,"--sex_ref",$sexes_ref,"--age_ref",$ages_ref,"--affection_ref",$affections_ref,"--network_num",$net,"--affection_status_value",$affections{'AFFECTION_VALUE'}, "--lib",$lib_dir,"--bin",$bin_dir,"--log_file_handle",$LOG,"--no_mito",$no_mito,"--no_y",$no_y,"--use_mito_match",$use_mito_match,"--use_y_match",$use_y_match,"--degree_rel_cutoff",$degree_rel_cutoff);
-			eval
-			{
+			eval{
+				#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 				PRIMUS::reconstruct_pedigree_v7::reconstruct_pedigree(@PR_commands);
+				#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			};
 			if($@)
 			{
@@ -358,7 +409,6 @@ sub run_PR
 	#my $rels_ref = PRIMUS::get_pairwise_summary::get_possible_relationships($output_dir,"$output_dir/Summary_$dataset_name.txt");
 	#PRIMUS::get_pairwise_summary::write_table("$output_dir/Summary_$dataset_name\_pairwise_table.txt",$rels_ref);
 }
-
 
 sub print_files_and_settings
 {
@@ -472,7 +522,6 @@ sub get_sample_info
 	return (\%hash);
 }
 
-
 sub apply_options 
 {
     my $help = 0;		
@@ -501,7 +550,7 @@ sub apply_options
 		"int_likelihood_cutoff=f" => \$initial_likelihood_cutoff,
 		"no_IMUS" => sub{$get_max_unrelated_set = 0},
 		"no_PR" => sub{$reconstruct_pedigrees = 0},
-    "generate_likelihoods_only" => sub{$get_max_unrelated_set = 0;$reconstruct_pedigrees = 0;$generate_likelihood_vectors_only=1},
+    	"generate_likelihoods_only" => sub{$get_max_unrelated_set = 0;$reconstruct_pedigrees = 0;$generate_likelihood_vectors_only=1},
 		"missing_val=f"=> \$missing_data_value,
 		"genome" => sub{$run_prePRIMUS = 1},
 		"no_automatic_IBD" => \$no_automatic_IBD,
@@ -854,10 +903,12 @@ sub check_names
 	my $sexes_ref; 
 	my $affections_ref; 
 	my $ages_ref; 
-	
+
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 	$samples1_ref = get_sample_info($ibd_estimates{'FILE'},$ibd_estimates{'FID1'},$ibd_estimates{'IID1'},$ibd_estimates{'PI_HAT'});
 	$samples2_ref = get_sample_info($ibd_estimates{'FILE'},$ibd_estimates{'FID2'},$ibd_estimates{'IID2'},$ibd_estimates{'PI_HAT'});
-	
+	#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 	if(exists $sexes{'FILE'})
 	{
 		if(!-e $sexes{'FILE'})
@@ -867,7 +918,10 @@ sub check_names
 		}
 		else
 		{
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 			$sexes_ref = get_sample_info($sexes{'FILE'},$sexes{'FID'},$sexes{'IID'},$sexes{'SEX'});
+			#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 			foreach my $id (keys %$sexes_ref)
 			{
 				if($$sexes_ref{$id} eq $sexes{'MALE'}){$$sexes_ref{$id} = 1}
@@ -897,7 +951,10 @@ sub check_names
 	}
 	if(exists $affections{'FILE'})
 	{
+		#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 		$affections_ref = get_sample_info($affections{'FILE'},$affections{'FID'},$affections{'IID'},$affections{'AFFECTION'});
+		#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 		foreach my $sample (keys %$samples1_ref)
 		{
 			if(!exists $$affections_ref{$sample})
@@ -916,7 +973,10 @@ sub check_names
 	}
 	if(exists $ages{'FILE'})
 	{
+		#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
 		$ages_ref = get_sample_info($ages{'FILE'},$ages{'FID'},$ages{'IID'},$ages{'AGE'});
+		#QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+
 		foreach my $sample (keys %$samples1_ref)
 		{
 			if(!exists $$ages_ref{$sample})

@@ -29,7 +29,7 @@ my $MAX_RUNTIME = 12960; # 43200 = 12 hours; 129,600 = 36 hours
 my $MAX_NETWORKS_TO_RESOLVE = 3000;
 my $MAX_GENERATIONS = 5;
 my $affected_status_value = 2;
-my $MIN_LIKELIHOOD = .1; ## should be .1
+my $MIN_LIKELIHOOD = .1; ## should be .1, adjusted in OG primus paper to 0.375 
 my $NO_MITO = 0;
 my $NO_Y = 0;
 my $USE_NO_MATCH_MITO = 0; ## Will be updated to 1 if there is a mito file passed in
@@ -182,7 +182,13 @@ sub reconstruct_pedigree
 	{
 		print "min_likelihood: $MIN_LIKELIHOOD\n" if $verbose > 1;
 		print $LOG "min_likelihood: $MIN_LIKELIHOOD\n" if $verbose > 1;
+
+		###################################
+		# This is where the relationship vector data gets read in from predict_relationships_2D.pm
+		
 		($relationships_ref,$raw_relationship_densities_ref,$total_possibilities, @fails) = PRIMUS::predict_relationships_2D::get_relationship_likelihood_vectors($IBD_file_ref,$MIN_LIKELIHOOD,$verbose,$lib_dir,$output_directory);
+	
+		###################################
 	};
 	if($@)
 	{	
@@ -419,6 +425,7 @@ sub write_summary_file
 {
 	print "Writing summary file\n" if($verbose > 0);
 	print $LOG "Writing summary file\n" if($verbose > 0);
+	
 	my $scores = shift;
 	my $num_dummies = shift;
 	my $num_generations = shift;
@@ -428,6 +435,7 @@ sub write_summary_file
 	my $non_dummy_samples = shift;
 	my $age_flags = shift;
 	my $error_message = shift;
+	
 	my $min = 100000000000;
 	my $max = -1000000000000;
 	my $mean = "NA";
@@ -920,6 +928,10 @@ sub reconstruct_network
 			}
 		}
 	}
+
+	###########################################
+	# at this point it would be nice if it could construct a pedigree straight up 
+	
 	
 	my @networks_resolved1;
 	print "Entering Phase 1. # of possible pedigrees: ". @networks_resolved0 ."\n" if $verbose > 0;
@@ -1092,7 +1104,6 @@ sub reconstruct_network
 	}
 	return (@networks_resolved);
 }
-
 
 ##################################
 ##################################
