@@ -1,0 +1,27 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_unrelateds
+  --freq
+  --nonfounders
+  --noweb
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_unrelateds
+  --silent
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:04:50 2021
+
+Note: --noweb has no effect since no web check is implemented yet.
+Random number seed: 1630523090
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+700966 variants loaded from .bim file.
+516 people (253 males, 263 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 516 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.997807.
+--freq: Allele frequencies (all samples) written to
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_unrelateds.frq
+.
+
+End time: Wed Sep  1 14:04:51 2021

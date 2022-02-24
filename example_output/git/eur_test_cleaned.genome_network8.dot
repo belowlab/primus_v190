@@ -1,0 +1,10 @@
+graph network8 {
+	node [shape=circle];
+
+	"R281169209" -- "R241872968" [color=black];
+	"R297927639" -- "R241872968" [color=black];
+	"R297927639" -- "R281169209" [color=black];
+	"R261659954" -- "R281169209" [color=black];
+	"R215938543" -- "R281169209" [color=black];
+	"R215938543" -- "R297927639" [color=black];
+}

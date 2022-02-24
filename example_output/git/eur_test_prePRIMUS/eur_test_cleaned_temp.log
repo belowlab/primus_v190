@@ -1,0 +1,39 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_cleaned
+  --geno 0.05
+  --maf 0.1
+  --make-bed
+  --noweb
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp
+  --read-freq ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_unrelateds.frq
+  --silent
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:04:57 2021
+
+Note: --noweb has no effect since no web check is implemented yet.
+Random number seed: 1630523097
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+285395 variants loaded from .bim file.
+550 people (265 males, 285 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 550 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 652 het. haploid genotypes present (see
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp.hh ); many
+commands treat these as missing.
+Total genotyping rate is 0.997969.
+--read-freq: .frq file loaded.
+0 variants removed due to missing genotype data (--geno).
+52195 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+233200 variants and 550 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp.bed +
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp.bim +
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp.fam ... done.
+
+End time: Wed Sep  1 14:04:58 2021

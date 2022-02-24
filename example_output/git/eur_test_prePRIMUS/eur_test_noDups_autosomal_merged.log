@@ -1,0 +1,38 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --allow-no-sex
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_merged
+  --family
+  --geno 0.05
+  --maf 0.1
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_merged
+  --pca
+  --pca-cluster-names AWS CEU CHB CHD GIH JPT LWK MEX MKK TSI YRI
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:04:13 2021
+
+Random number seed: 1630523053
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+218709 variants loaded from .bim file.
+1454 people (701 males, 753 females) loaded from .fam.
+--family: 561 clusters defined.
+Using up to 63 threads (change this with --threads).
+Before main variant filters, 1421 founders and 33 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.996968.
+0 variants removed due to missing genotype data (--geno).
+0 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+218709 variants and 1454 people pass filters and QC.
+Note: No phenotypes present.
+--pca-cluster-names/--pca-clusters: 857 samples specified.
+Relationship matrix calculation complete.
+--pca: Results saved to
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_merged.eigenval
+and
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_merged.eigenvec
+.
+
+End time: Wed Sep  1 14:04:28 2021

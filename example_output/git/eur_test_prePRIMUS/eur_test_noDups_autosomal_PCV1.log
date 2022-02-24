@@ -1,0 +1,32 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --allow-no-sex
+  --assoc
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal
+  --mpheno 1
+  --noweb
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_PCV1
+  --pheno ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal.eigenvec_temp
+  --silent
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:04:41 2021
+
+Note: --noweb has no effect since no web check is implemented yet.
+Random number seed: 1630523081
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+700966 variants loaded from .bim file.
+550 people (265 males, 285 females) loaded from .fam.
+549 phenotype values present after --pheno.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 550 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.997866.
+700966 variants and 550 people pass filters and QC.
+Phenotype data is quantitative.
+Writing QT --assoc report to
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_PCV1.qassoc
+... done.
+
+End time: Wed Sep  1 14:04:43 2021

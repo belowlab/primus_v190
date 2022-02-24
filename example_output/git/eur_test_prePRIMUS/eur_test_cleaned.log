@@ -1,0 +1,42 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_cleaned_temp
+  --geno 0.05
+  --genome
+  --maf 0.1
+  --min 0
+  --mind 0.1
+  --noweb
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_cleaned
+  --read-freq ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_unrelateds.frq
+  --silent
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:04:59 2021
+
+Note: --noweb has no effect since no web check is implemented yet.
+Random number seed: 1630523099
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+233200 variants loaded from .bim file.
+550 people (265 males, 285 females) loaded from .fam.
+0 people removed due to missing genotype data (--mind).
+Using up to 63 threads (change this with --threads).
+Before main variant filters, 550 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 399 het. haploid genotypes present (see
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned.hh ); many commands
+treat these as missing.
+Total genotyping rate is 0.997818.
+--read-freq: .frq file loaded.
+0 variants removed due to missing genotype data (--geno).
+0 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+233200 variants and 550 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 10634 variants on non-autosomes from IBD calculation.
+IBD calculations complete.
+Finished writing
+../example_output/git/eur_test_prePRIMUS/eur_test_cleaned.genome .
+
+End time: Wed Sep  1 14:05:03 2021

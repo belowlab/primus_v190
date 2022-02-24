@@ -1,0 +1,14 @@
+graph network1 {
+	node [shape=circle];
+
+	"R228028996" -- "R202131750" [color=black];
+	"R292549731" -- "R202131750" [color=black];
+	"R292549731" -- "R228028996" [color=black];
+	"R210748705" -- "R202131750" [color=black];
+	"R210748705" -- "R228028996" [color=black];
+	"R210748705" -- "R292549731" [color=black];
+	"R232674206" -- "R202131750" [color=black];
+	"R232674206" -- "R228028996" [color=black];
+	"R232674206" -- "R292549731" [color=black];
+	"R232674206" -- "R210748705" [color=black];
+}

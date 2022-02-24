@@ -2,6 +2,8 @@
 
 Copy of PRIMUS v1.9.0 for testing / improvements amidst the rewriting process. 
 
+GitHub link: https://github.com/washedgram/primus_old
+
 
 ## Changes
 

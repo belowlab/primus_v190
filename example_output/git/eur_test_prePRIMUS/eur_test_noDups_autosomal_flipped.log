@@ -1,0 +1,38 @@
+PLINK v1.90b6.3 64-bit (17 Jul 2018)
+Options in effect:
+  --allow-no-sex
+  --bfile ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped
+  --flip ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped_flip_SNPs.txt
+  --indiv-sort 0
+  --make-bed
+  --noweb
+  --out ../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped
+  --silent
+
+Hostname: vgipiper
+Working directory: /data100t1/home/grahame/projects/compadre/primus/primus_old/bin
+Start time: Wed Sep  1 14:03:06 2021
+
+Note: --noweb has no effect since no web check is implemented yet.
+Random number seed: 1630522986
+1031983 MB RAM detected; reserving 515991 MB for main workspace.
+Warning: --make-bed input and output filenames match.  Appending '~' to input
+filenames.
+282687 variants loaded from .bim file.
+550 people (265 males, 285 females) loaded from .fam.
+--flip: 194 SNPs flipped.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 550 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.997985.
+282687 variants and 550 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped.bed
++
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped.bim
++
+../example_output/git/eur_test_prePRIMUS/eur_test_noDups_autosomal_flipped.fam
+... done.
+
+End time: Wed Sep  1 14:03:07 2021
