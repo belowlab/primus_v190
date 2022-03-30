@@ -1,0 +1,34 @@
+digraph {
+graph [overlap=false]
+node [shape=doublecircle];
+"main" -> "Getopt::Long::CallBack";
+"vars" -> "vars";
+"overload" -> "overloading";
+"vars" -> "warnings::register";
+"Getopt::Long::CallBack" -> "overload";
+"warnings::register" -> "warnings";
+"Getopt::Long" -> "Exporter";
+"constant" -> "constant";
+"Exporter::Heavy" -> "strict";
+"Getopt::Long" -> "constant";
+"Exporter" -> "Exporter::Heavy";
+"Getopt::Long" -> "vars";
+"main" -> "warnings";
+"main" -> "Getopt::Long";
+"constant" -> "warnings::register";
+"Exporter" -> "Exporter";
+"constant" -> "mro";
+"Exporter::Heavy" -> "Exporter::Heavy";
+"overload" -> "overload";
+"overloading" -> "warnings";
+"Exporter::Heavy" -> "warnings";
+"overload" -> "warnings::register";
+"main" -> "main";
+"strict" -> "strict";
+"constant" -> "strict";
+"constant" -> "Internals";
+"main" -> "strict";
+"warnings" -> "warnings";
+"vars" -> "strict";
+"Getopt::Long" -> "UNIVERSAL";
+}

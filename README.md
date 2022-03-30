@@ -1,6 +1,6 @@
 # primus_old
 
-Copy of PRIMUS v1.9.0 for testing / improvements amidst the rewriting process. 
+Copy of Perl-based PRIMUS v1.9.0 for testing & benchmarking while [PRIMUS 2](https://github.com/washedgram/primus2). 
 
 GitHub link: https://github.com/washedgram/primus_old
 

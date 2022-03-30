@@ -1325,7 +1325,7 @@ sub get_unrelateds
 	print "\nGet Unrelated set for $stem_name => $new_stem_name\n" if $verbose > 0;
 	print $LOG "\nGet Unrelated set for $stem_name => $new_stem_name\n" if $verbose > 0;
 
-    my $temp = system("$PLINK --allow-no-sex --bfile $stem_name --maf $MAF --geno $GENO --thin-count 10000 --rel-cutoff 0.09375 --out $stem_name");
+    my $temp = system("$PLINK --allow-no-sex --bfile $stem_name --maf $MAF --geno $GENO --thin-count 10000 --rel-cutoff 0.09375 --mind --out $stem_name");
 	if($temp > 0)
 	{
 		die "ERROR!!! PLINK's rel-cutoff failed.\n";
