@@ -1,0 +1,32 @@
+
+[34m[20:29:39] Launching PRIMUS ...
+
+[0m1out_dir: ../example_output
+
+FILES AND COLUMNS
+LOG FILE: ../example_output/PRIMUS_output.log
+Data stem: ../docker_example_data/eur_test
+Dataset results dir: ../example_output
+Age file: none
+Sex file: none
+Affection file: none
+Trait weighting:
+	size (size)
+
+SETTINGS
+Get PLINK IBD ESTIMATES with prePRIMUS: 1
+Automatic reference population selection: 1
+Verbose: 1
+Relatedness threshold: 0.09375
+Initial likelihood cutoff: 0.3
+Max generations: none
+Max generational mating gap: 0
+Get max unrelated set: 1
+Reconstruct pedigrees: 1
+[34m[20:29:39] Launching prePRIMUS ...
+
+[0m1
+
+Using PLINK to calculate IBD estimates for eur_test
+
+Running ../example_output/eur_test_prePRIMUS/eur_test using HapMap3 to find an appropriate reference
